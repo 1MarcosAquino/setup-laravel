@@ -14,3 +14,4 @@ project/
 │       └── custom.ini
 └── docker-compose.yml
 ````
+Torne o script de shell executável

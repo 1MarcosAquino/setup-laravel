@@ -11,10 +11,20 @@ services:
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT={DB_PORT}
+      - MYSQL_DATABASE=${DB_DATABASE} 
+      - MYSQL_USER=${DB_USERNAME} 
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     ports:
       - "9000:9000"
     networks:
       - laravel
+    command: >
+      sh -c "chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache &&
+             chmod -R 775 /var/www/storage /var/www/bootstrap/cache &&
+             php-fpm"
 
   webserver:
     image: nginx:alpine
@@ -31,11 +41,13 @@ services:
     image: mysql:8.0
     container_name: laravel_mysql
     restart: unless-stopped
+
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=${DB_DATABASE} 
+      - MYSQL_USER=${DB_USERNAME} 
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+
     ports:
       - "3306:3306"
     volumes:
