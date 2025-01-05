@@ -20,4 +20,4 @@ COPY docker/nginx/default.conf /etc/nginx/default.conf
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Define o diretório de trabalho
-WORKDIR /var/www/html
+WORKDIR /var/www
